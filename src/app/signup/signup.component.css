@@ -1,0 +1,17 @@
+mat-card {
+    margin: 2rem auto;
+    width: 30%;
+}
+mat-card-title {
+    display: block;
+    margin: 0 auto;
+}
+mat-form-field {
+    display: block;
+    width: 300px;
+    margin: 0 auto;
+}
+.signupButton {
+    margin-top: .5rem;
+    margin-left: 2.3rem;
+}
