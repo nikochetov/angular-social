@@ -1,37 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { first } from 'rxjs/operators';
+import { User } from '../interfaces';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  signupFormGroup: FormGroup;
-  maxDate = new Date();
-  hide = true;
-  constructor() { }
+  loginForm: FormGroup;
+  loading = false;
+  submitted = false;
+  returnUrl: string;
+  error: string;
+  success: string;
 
-  ngOnInit(): void {
-    this.signupFormGroup = new FormGroup({
-      userName: new FormControl('', [
-        Validators.required
-      ]),
-      password: new FormControl('', [
-        Validators.required
-      ])
-    })
-  }
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private authService: AuthService) {
 
-  get _email(): AbstractControl {
-    return this.signupFormGroup.get('email')
-  }
-
-  getErrorMessage() {
-    if (this._email.hasError('required')) {
-      return 'You must enter a value';
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/']);
     }
 
-    return this._email.hasError('email') ? 'Not a valid email' : '';
+  }
+
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+
+    this.returnUrl = this.route.snapshot.queryParams['/returnUrl'] || '/userAccount';
+  }
+
+  get f() {
+    return this.loginForm.controls;
+  }
+
+  onSubmit(): User {
+    console.log(localStorage);
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    this.authService.login(this.f.userName.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        },
+      );
   }
 }

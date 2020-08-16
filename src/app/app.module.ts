@@ -20,6 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CarouselComponent } from './carousel/carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TopBarComponent,
     SignupComponent,
     CarouselComponent,
+    UserAccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule.forRoot([
       { path: '', component: AppComponent },
     ]),
+    HttpClientModule,
     MatButtonModule,
     MatToolbarModule,
     MatDialogModule,

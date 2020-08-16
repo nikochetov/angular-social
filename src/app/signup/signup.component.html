@@ -2,48 +2,41 @@
     <mat-card-header>
         <mat-card-title>Sign Up</mat-card-title>
     </mat-card-header>
-    <form [formGroup]="signupFormGroup">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
         <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="Enter your name" formControlName="name">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="Enter your first name" formControlName="firstName" autocomplete="off" />
+            <mat-error *ngIf="submitted && f.firstName.errors">
+                <div *ngIf="f.firstName.errors.required">First name is required</div>
+            </mat-error>
         </mat-form-field>
+
+
         <mat-form-field appearance="outline">
-            <input matInput matDatepickerInput readonly
-                   [max]="maxDate"
-                   [matDatepicker]="picker"
-                   placeholder="Birth"
-                   formControlName="dateOfBirth"
-                   required
-            >
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Enter your last name" formControlName="lastName" autocomplete="off">
+            <mat-error *ngIf="submitted && f.lastName.errors">
+                <div *ngIf="f.firstName.errors.required">Last name is required</div>
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
-            <input matInput placeholder="Enter your username" formControlName="userName">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Enter your email</mat-label>
-            <input matInput placeholder="pat@example.com" formControlName="email" required>
-            <mat-error *ngIf="_email.invalid">{{getErrorMessage()}}</mat-error>
+            <input matInput placeholder="Enter your username" formControlName="userName" autocomplete="off">
+            <mat-error *ngIf="submitted && f.userName.errors">
+                <div *ngIf="f.firstName.errors.required">Username is required</div>
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Enter your password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
+            <input matInput formControlName="password" autocomplete="off">
+            <mat-error *ngIf="submitted && f.password.errors">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+                <div *ngIf="f.password.errors.minlength">Required {{ f.password.errors.minlength.requiredLength }} or more symbols.</div>
+            </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Confirm password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-        </mat-form-field>
-
     </form>
-    <button class="signupButton" mat-flat-button color="primary" (click)="onClick()">Sign Up</button>
+    <button class="signupButton" mat-flat-button color="primary" (click)="onSubmit()">Sign Up</button>
 </mat-card>

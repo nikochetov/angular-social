@@ -7,7 +7,7 @@ import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./carousel.component.css'],
 })
 export class CarouselComponent implements OnInit {
-  images = [1, 2, 3, 4, 5].map(() => `https://picsum.photos/900/500?random&t=${Math.random()}`)
+  images = [1, 2, 3, 4, 5].map(() => `https://picsum.photos/1024/500?random&t=${Math.random()}`)
   @ViewChild('mycarousel', { static: true }) carousel: NgbCarousel;
 
   constructor() {

@@ -12,7 +12,5 @@ mat-form-field {
     margin: 0 auto;
 }
 .signupButton, a {
-    margin-top: 1rem;
-    margin-left: 2.3rem;
     margin-bottom: 1rem;
 }

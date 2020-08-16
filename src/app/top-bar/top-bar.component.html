@@ -2,7 +2,7 @@
     <a [routerLink]="['/']">
         <h1>My Social</h1>
     </a>
-    <div class="buttons">
+    <div *ngIf="!authService.currentUserValue" class="buttons">
         <button mat-button>
             <a routerLink="signup">Sign Up</a>
         </button>
@@ -10,4 +10,10 @@
             <a routerLink="login">Log In</a>
         </button>
     </div>
+    <div *ngIf="authService.currentUserValue" class="buttons">
+        <button mat-button (click)="logout()">
+            <a routerLink="signup">Logout</a>
+        </button>
+    </div>
+
 </mat-toolbar>
